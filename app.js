@@ -58,5 +58,9 @@ server.listen();
     // 17.d se hace release
 // 18. subir el rest server a heroku
     //instalo CLI desde web herku con mi mail mery...
-    // heroku git:remote -a api-rest-yrem  -> en bash
-    // seteo en package json
+    // $ heroku login
+    // $ heroku git:remote -a api-rest-yrem  -> en bash
+    // $ git add .
+    // $ git commit -m "npm start added"
+    // $ git push heroku master
+    // seteo en package json dentro de scripts ->  "start": "node app"
