@@ -54,3 +54,9 @@ server.listen();
 // 17. respaldo del rest server en github - 109
     // 17.a creamos .gitignore y ponemos los node_modules/
     // 17.b luego subimos git commit
+    // 17.c creamos tag
+    // 17.d se hace release
+// 18. subir el rest server a heroku
+    //instalo CLI desde web herku con mi mail mery...
+    // heroku git:remote -a api-rest-yrem  -> en bash
+    // seteo en package json
