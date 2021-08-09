@@ -1,14 +1,19 @@
 const express = require('express'); //3.b - requerimos express (L1 app.js)
-var cors = require('cors');
+var cors = require('cors'); // 10.a
+const { dbConnection } = require('../database/config'); //31
 
 class Server {// 3.a - abrimos class
   constructor(){
     //const app = express() //this sirve para acceso al app o al port, etc
-    this.app = express() // 3.c - inicializams express en app (L6 app.js)
-    this.port = process.env.PORT // 3.i asignamos 1 vr al puerto
+    this.app = express() // 3.c - inicializams express en app, como instacia, como 1 propiedad en la misma class Server(L6 app.js)
+    this.port = process.env.PORT // 3.h asignamos 1 vr al puerto
+      // y lo subimos aca para que sea visible pa todo el mundo
 
     this.usuariosPath = '/api/usuarios'; // 12.a endpoint de usuarios
 
+    /* CONECTAR A BASE DE DATOS */
+    this.conectarDB();
+    
     /* MIDDLEWARES */ 
     this.middlewares(); // 7.b
 
@@ -17,9 +22,14 @@ class Server {// 3.a - abrimos class
   }
 
   /* MÉTODOS DE MI APLICACIÓN */
+  async conectarDB(){ //31.
+    await dbConnection();
+  }
+
+
   middlewares(){ // 7.
     /* CORS */ //10.
-    this.app.use( cors() );
+    this.app.use( cors() ); // 10.b
       // x el lado del BE, no hay diferencia en poner esto o no, pero para FE si les va a dar errores de CORS
     
     /* LECTURA Y PARSEO DEL BODY */ //14.a
@@ -38,7 +48,7 @@ class Server {// 3.a - abrimos class
   }
 
   routes(){ //3.d- creo mi metodo routes
-    // this.app.get('/api', (req, res) => { // 3.e - (L8 app.js)
+    // this.app.get('/api', (req, res) => { // 3.e - (L20 app.js)
     //     //res.send('Hello World')//en postman y thhunder esto me dice que es tipo text/html; charset=utf-8, pero yo quiero en json...
     //     res/* .status(403) */.json({ //9.a, si l metodo de autenticacion sta mal, o si falto token, etc ntonces aumento: .status(403) para saber l error
     //       ok: true,
@@ -76,8 +86,8 @@ class Server {// 3.a - abrimos class
       //this.app.use('/api/usuarios', require('../routes/usuarios')) // 11.c
       //llamo a las rutas que separé en usuarios.js
   }
-  listen(){ //3.g- creo mi metodo routes
-    this.app.listen(this.port, () => { // 3.h (L12 app.js)
+  listen(){ //3.g- creo mi metodo listen
+    this.app.listen(this.port, () => { // 3.i (L12 app.js)
       //este process.env.PORT no deberia estar acá xqe alguien podría no saber donde está el PORT
       //así que lo hago visible a todo el mundo
       console.log('servidor corriendo en puerto', this.port)
